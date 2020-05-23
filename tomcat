@@ -1,0 +1,53 @@
+#!/bin/bash
+
+case "$1" in
+    log)
+
+        case "$OSTYPE" in
+            linux*)
+                tail -n 60 -F /var/log/tomcat*/catalina.out ;;
+            darwin*)
+                tail -n 60 -F /usr/local/Cellar/tomcat/*/libexec/logs/catalina.*.log ;;
+        esac
+    ;;
+
+    start)
+        case "$OSTYPE" in
+            linux*)
+                rm -r /var/log/tomcat*/catalina.*
+                /etc/init.d/tomcat* start 
+                ;;
+            darwin*)
+                rm -r /usr/local/Cellar/tomcat/*/libexec/logs/catalina.*
+                brew services start tomcat 
+                ;;
+        esac
+    ;;
+
+    stop)
+        case "$OSTYPE" in
+            linux*)
+                /etc/init.d/tomcat* stop ;;
+            darwin*)
+                brew services stop tomcat ;;
+        esac
+    ;;
+
+    restart)
+        case "$OSTYPE" in
+            linux*)
+                rm -r /var/log/tomcat*/catalina.*
+                /etc/init.d/tomcat* restart 
+                ;;
+            darwin*)
+                rm -r /usr/local/Cellar/tomcat/*/libexec/logs/catalina.*
+                brew services restart tomcat 
+                ;;
+        esac
+    ;;
+
+    *)
+        echo "tomcat: Unrecognized command - please use 'start', 'stop', 'restart' or 'log'."
+        exit 1
+    ;;    
+esac

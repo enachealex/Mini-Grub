@@ -1,0 +1,43 @@
+#!/bin/bash
+
+case "$1" in
+    log)
+        tail -n 60 -F /var/log/minigrub/minigrub.log
+    ;;
+
+    install)
+        mkdir -p /var/log/minigrub
+        chmod -R 777 /var/log/minigrub
+
+        case "$OSTYPE" in
+            linux*)
+                /etc/init.d/tomcat* stop
+                sudo sh -c "echo 'UMASK=\"0022\"' > /usr/share/tomcat8/bin/setenv.sh"
+                cp target/*.war /var/lib/tomcat*/webapps/
+                /etc/init.d/tomcat* start
+                ;;
+            darwin*)
+                brew services stop tomcat
+                sudo sh -c "echo 'UMASK=\"0022\"' > /usr/local/Cellar/tomcat/9.0.34/libexec/bin/setenv.sh"
+                cp target/*.war /usr/local/Cellar/tomcat/*/libexec/webapps/
+                brew services start tomcat 2> /dev/null
+                ;;
+        esac
+        echo "servlet: war file installed."
+    ;;
+
+    uninstall)
+        case "$OSTYPE" in
+            linux*)
+                rm /var/lib/tomcat*/webapps/*.war ;;
+            darwin*)
+                rm /usr/local/Cellar/tomcat/*/libexec/webapps/*.war ;;
+        esac
+        echo "servlet: war file removed."
+    ;;
+
+    *)
+        echo "servlet: Unrecognized command - please use 'install', 'uninstall' or 'log'."
+        exit 1
+    ;;
+esac
