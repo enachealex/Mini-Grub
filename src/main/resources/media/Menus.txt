@@ -1,0 +1,19 @@
+Taco
+Soft taco
+Burrito
+Quesodilla
+
+Pizza
+Pepperoni
+Cheese
+Margherita
+
+Asian
+General Tsao's chicken
+Teriyaki
+Tea
+
+Burger
+Original
+Cheeseburger
+Impossible Burger
