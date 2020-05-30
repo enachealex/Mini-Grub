@@ -1,4 +1,4 @@
-package edu.lwtech.csd299.minigrub;
+ package edu.lwtech.csd299.minigrub;
 
 import java.io.*;
 import java.util.*;

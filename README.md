@@ -1,2 +1,2 @@
 # minigrub
-A local restaurant delivery service web application
+Minigrub allows users to browse local restaurant menus on the web, build and pay for their order, and schedule a delivery.
