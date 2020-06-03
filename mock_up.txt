@@ -1,0 +1,19 @@
+** Alex Enache **
+show.ftl
+	four buttons for each restaurant
+	title on the top
+	copyright, includes when it was made and our names, in footer
+	
+menu.ftl
+	have title on top
+	will have each food item along with choice of quantity desired
+	back button to go back to the show.ftl page
+	copyright, includes when it was made and our names, in footer
+	
+checkout.ftl
+	will have title on top
+	copyright, includes when it was made and our names, in footer
+	list of all foods that will possibly be ordered
+	back button to menu of current restaurant
+	confirmation of order button that will take you to confirmation page
+	
