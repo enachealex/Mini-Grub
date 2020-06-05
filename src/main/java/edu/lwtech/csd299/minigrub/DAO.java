@@ -1,3 +1,4 @@
+//Owned by Seth Peterson
 package edu.lwtech.csd299.minigrub;
 
 import java.util.*;

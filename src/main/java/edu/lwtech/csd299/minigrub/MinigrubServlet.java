@@ -1,4 +1,5 @@
- package edu.lwtech.csd299.minigrub;
+//Owned by Beni Ungur
+package edu.lwtech.csd299.minigrub;
 
 import java.io.*;
 import java.util.*;
