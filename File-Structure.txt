@@ -1,0 +1,34 @@
+/*****************************/
+Java Files:
+-----------
+DAO.java - Seth
+Customer.java - Beni
+CustomerSqlDAO.java - Seth
+SQLRow.java - Beni/Seth
+SQLUtils.java - Beni/Seth 
+MiniGrub.java - Beni
+MiniGrubSqlDAO.java - Seth
+MiniGrubServlet.java - Beni
+Restaurant.java - Beni
+RestaurantSqlDAO.java - Seth
+Menu.java - Beni
+MenuSqlDAO.java - Seth
+Employee.java - Beni
+EmployeeSqlDAO.java - Seth
+Cart.java - Beni
+CartSqlDAO.java - Seth
+
+/*****************************/
+Template Files:
+---------------
+index.ftl - Alex
+menu.ftl - Alex
+checkout.ftl - Alex
+profile.ftl - Alex
+
+/*****************************/
+SQL Files:
+----------
+needs-to-be-named.sql - Seth
+
+/*****************************/
