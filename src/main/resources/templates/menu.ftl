@@ -2,7 +2,7 @@
 <!-- Alex Enache -->
 <html>
     <head>
-        <title>MiniGrub</title>
+        <title>Minigrub</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -16,10 +16,17 @@
         <fieldset>
             <legend>Add Food</legend>
             <form name="menu" action="add" method="post">
-                Food : <input type="text" name="food" /><br/>
-                <input type="submit" value="Add to Cart" />
+                <#list restaurants["menu"] as menu>
+                    <tr>
+                        <td>${restaurants.food}</td>
+                        <td>${restaurants.description}</td>
+                    </tr>
+                </#list>
+                Quantity : <input type="number" name="quantity" /><br/>
+                <button type="submit">Add to Cart</button>
             </form>
         </fieldset>
+        
     </body>
     <footer>&copy; 2020 BainBridge Team - Beniamin Ungur, Seth Peterson, Alex Enache</footer>
 </html>
