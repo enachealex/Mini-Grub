@@ -5,15 +5,15 @@ import java.util.*;
 import org.apache.log4j.Logger;
 
 //TODO: Create additional DAO classes for additional POJO classes
-//TODO: Refactor DemoPojo to a real POJO class name
-public class DemoPojoMemoryDAO implements DAO<DemoPojo> {
+
+public class RestaurantPojoMemoryDAO implements DAO<RestaurantPojo> {
     
-    private static final Logger logger = Logger.getLogger(DemoPojoMemoryDAO.class.getName());
+    private static final Logger logger = Logger.getLogger(RestaurantPojoMemoryDAO.class.getName());
     
     private int nextID;
-    private List<DemoPojo> memoryDB;
+    private List<RestaurantPojo> memoryDB;
 
-    public DemoPojoMemoryDAO() {
+    public RestaurantPojoMemoryDAO() {
         this.nextID = 1000;
         this.memoryDB = new ArrayList<>();
         // addSampleData();
@@ -23,7 +23,7 @@ public class DemoPojoMemoryDAO implements DAO<DemoPojo> {
         return true;
     }
 
-    public int insert(DemoPojo item) {
+    public int insert(RestaurantPojo item) {
         logger.debug("Inserting " + item + "...");
 
         if (item.getID() != -1) {
@@ -31,7 +31,7 @@ public class DemoPojoMemoryDAO implements DAO<DemoPojo> {
             return -1;
         }
         
-        item = new DemoPojo(generateNextItemID(), item.getName());
+        item = new RestaurantPojo(generateNextItemID(), item.getName());
         memoryDB.add(item);
         
         logger.debug("Item successfully inserted!");
@@ -41,8 +41,8 @@ public class DemoPojoMemoryDAO implements DAO<DemoPojo> {
     public void delete(int id) {
         logger.debug("Trying to delete item with ID: " + id);
 
-        DemoPojo itemFound = null;
-        for (DemoPojo item : memoryDB) {
+        RestaurantPojo itemFound = null;
+        for (RestaurantPojo item : memoryDB) {
             if (item.getID() == id) {
                 itemFound = item;
                 break;
@@ -52,11 +52,11 @@ public class DemoPojoMemoryDAO implements DAO<DemoPojo> {
             memoryDB.remove(itemFound);
     }
 
-    public DemoPojo getByID(int id) {
+    public RestaurantPojo getByID(int id) {
         logger.debug("Trying to get item with ID: " + id);
         
-        DemoPojo itemFound = null;
-        for (DemoPojo item : memoryDB) {
+        RestaurantPojo itemFound = null;
+        for (RestaurantPojo item : memoryDB) {
             if (item.getID() == id) {
                 itemFound = item;
                 break;
@@ -65,7 +65,7 @@ public class DemoPojoMemoryDAO implements DAO<DemoPojo> {
         return itemFound;
     }
     
-    public DemoPojo getByIndex(int index) {
+    public RestaurantPojo getByIndex(int index) {
         // Note: indexes are zero-based
         logger.debug("Trying to get item with index: " + index);
 
@@ -75,7 +75,7 @@ public class DemoPojoMemoryDAO implements DAO<DemoPojo> {
         return memoryDB.get(index);
     }
     
-    public List<DemoPojo> getAll() {
+    public List<RestaurantPojo> getAll() {
         logger.debug("Getting all items");
         return new ArrayList<>(memoryDB);
     }    
@@ -84,7 +84,7 @@ public class DemoPojoMemoryDAO implements DAO<DemoPojo> {
         logger.debug("Getting Item IDs...");
 
         List<Integer> itemIDs = new ArrayList<>();
-        for (DemoPojo item : memoryDB) {
+        for (RestaurantPojo item : memoryDB) {
             itemIDs.add(item.getID());
         }
         return itemIDs;

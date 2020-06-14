@@ -1,7 +1,5 @@
 package edu.lwtech.csd299.minigrub;
 
-public class Restaurant {
+public class CartPojo {
     private int id;
-    private String name;
-    
 }

@@ -20,7 +20,7 @@ public class MinigrubServlet extends HttpServlet {
     private static final String TEMPLATE_DIR = "/WEB-INF/classes/templates";
     private static final Configuration freemarker = new Configuration(Configuration.getVersion());
 
-    private DAO<DemoPojo> demoMemoryDao = null;
+    private DAO<RestaurantPojo> restaurantMemoryDao = null;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -41,7 +41,7 @@ public class MinigrubServlet extends HttpServlet {
         }
         logger.info("Successfully Loaded Freemarker");
         
-        demoMemoryDao = new DemoPojoMemoryDAO();
+        restaurantMemoryDao = new RestaurantPojoMemoryDAO();
         addDemoData();
 
         logger.warn("Initialize complete!");
@@ -62,19 +62,12 @@ public class MinigrubServlet extends HttpServlet {
         switch (command) {
 
             case "show":
-                String indexParam = request.getParameter("index");
-                int index = (indexParam == null) ? 0 : Integer.parseInt(indexParam);
-                int numItems = demoMemoryDao.getAllIDs().size();
-                int nextIndex = (index + 1) % numItems;
-                int prevIndex = index - 1;
-                if (prevIndex < 0) prevIndex = numItems-1;
-
+                String idParam = request.getParameter("id");
+                int id = (idParam == null) ? 0 : Integer.parseInt(idParam);
                 template = "show.ftl";
-                model.put("item", demoMemoryDao.getByIndex(index));
-                model.put("prevIndex", prevIndex);
-                model.put("nextIndex", nextIndex);
+                model.put("restaurants", restaurantMemoryDao.getByID(id));
                 break;
-                
+
             default:
                 logger.debug("Unknown GET command received: " + command);
 
@@ -93,6 +86,12 @@ public class MinigrubServlet extends HttpServlet {
     }
 
     //TODO: doPost() goes here - if needed.
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        UserPojo user = new UserPojo(-1, username);
+    }
     
     @Override
     public void destroy() {
@@ -122,11 +121,11 @@ public class MinigrubServlet extends HttpServlet {
     }    
 
     private void addDemoData() {
-        logger.debug("Creating sample DemoPojos...");
+        logger.debug("Creating sample RestaurantPojos...");
         
-        demoMemoryDao.insert(new DemoPojo("Item I"));
-        demoMemoryDao.insert(new DemoPojo("Item II"));
-        demoMemoryDao.insert(new DemoPojo("Item III"));
+        restaurantMemoryDao.insert(new RestaurantPojo(1000, "PizzaPlace"));
+        restaurantMemoryDao.insert(new RestaurantPojo(1001, "TacosPlace"));
+        restaurantMemoryDao.insert(new RestaurantPojo(1002, "RicePlace"));
         
         logger.info("...items inserted");
     }
