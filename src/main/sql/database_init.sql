@@ -1,19 +1,14 @@
 /* AUTHOR: Seth Peterson
  * BRIEF: This is a series of commands to input into the sql command prompt
  *   in order to create the database from scratch.
- *   TODO: Ensure that this function properly initializes the database-
- *   sqlcmd exec ?????
  */
 CREATE DATABASE Grubdata
-go
-
-sp_databases
 go
 
 USE Grubdata
 go
 
-CREATE TABLE Userdb
+CREATE TABLE Users
 (
   userid1 BINARY(16),
   userid2 BINARY(16),
@@ -22,24 +17,48 @@ CREATE TABLE Userdb
 )
 go
 
+
+CREATE TABLE Accounts
+(
+  userid1 BINARY(16),
+  userid2 BINARY(16),
+  email VARCHAR(30),
+  address VARCHAR(30),
+  PRIMARY KEY(userid1,userid2)
+)
+go
+
+CREATE TABLE Carts
+(
+  userid1 BINARY(16),
+  userid2 BINARY(16),
+  serviceid1 BINARY(16),
+  serviceid2 BINARY(16),
+  itemid BINARY(16),
+  quantity INT,
+  PRIMARY KEY(userid1,userid2)
+)
+go
+
+CREATE TABLE Menus
+(
+  serviceid1 BINARY(16),
+  serviceid2 BINARY(16),
+  itemid BINARY(16),
+  maximum INT,
+  PRIMARY KEY(serviceid1,serviceid2)
+)
+go
+/* This prints out the current database lists.
+sp_databases
+go
+*/
+
+/* This prints the tables into the console so we can see we've made it
+ * correctly.
 SELECT * FROM INFORMATION_SCHEMA.TABLES
 go
-
-/*Note - remove apostrophes if using code directly in the console window
- * below are some sample values to try and insert with stored procedure
- * For the stored procedures, I've pasted them from sql_sproc.sql into 
- * the command line individually, then 'go' and checking with the following:
- */
-
-/*paste code*/
-go
-sp_helptext sp_IsIDUnique
-go
-
-/*paste code*/
-go
-sp_helptext sp_InsertUser
-go
+*/
 
 /* At this point I start testing the stored procedures with instructions
  * found in sql_testvalues.sql
