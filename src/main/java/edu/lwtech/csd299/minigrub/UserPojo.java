@@ -2,33 +2,41 @@ package edu.lwtech.csd299.minigrub;
 
 public class UserPojo {
     private int id;
-    private String username;
+    private String userName;
+    private String displayName;
+    private String email;
     private String password;
 
-    public UserPojo(String username) {
-        this(-1, username);
+    public UserPojo(String userName) {
+        this(-1, userName);
     }
 
     public UserPojo(int id, UserPojo user) {
-        this(id, user.username, user.password);
+        this(id, user.userName, user.displayName, user.email, user.password);
     }
 
-    public UserPojo(int id, String username) {
+    public UserPojo(int id, String email) {
         if (id < -1) throw new IllegalArgumentException("Invalid argument. id < -1.");
-        if (username == null) throw new IllegalArgumentException("Invalid argument. username is null.");
-        if (username.equals("")) throw new IllegalArgumentException("Invalid argument. username is empty.");
+        if (email == null) throw new IllegalArgumentException("Invalid argument. Email is null.");
+        if (email.equals("")) throw new IllegalArgumentException("Invalid argument. Email is empty.");
+        if (!email.contains("@")) throw new IllegalArgumentException("Invalid argument. Email address not valid.");
 
         this.id = id;
-        this.username = username;
+        this.email = email;
+        this.userName = email.substring(0, email.indexOf('@'));
     }
 
-    public UserPojo(int id, String username, String password) {
+    public UserPojo(int id, String userName, String displayName, String email, String password) {
         if (id < -1) throw new IllegalArgumentException("Invalid argument. id < -1.");
-        if (username == null) throw new IllegalArgumentException("Invalid argument. username is null.");
-        if (username.equals("")) throw new IllegalArgumentException("Invalid argument. username is empty.");
+        if (email == null) throw new IllegalArgumentException("Invalid argument. Email is null.");
+        if (email.equals("")) throw new IllegalArgumentException("Invalid argument. Email is empty.");
+        if (!email.contains("@")) throw new IllegalArgumentException("Invalid argument. Email address not valid.");
+        if (userName == null || userName == "") userName = email.substring(0, email.indexOf('@'));
 
         this.id = id;
-        this.username = username;
+        this.userName = userName;
+        this.displayName = displayName;
+        this.email = email;
         this.password = password;
     }
 
@@ -37,11 +45,19 @@ public class UserPojo {
     }
 
     public String getUserName() {
-        return username;
+        return userName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
     public String toString() {
-        return "Hello, " + username + "!";
+        return "Hello, " + displayName + "!";
     }
 }

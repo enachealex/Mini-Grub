@@ -10,7 +10,7 @@ public class RestaurantPojo {
     private int id;                 // Database ID (or -1 if it isn't in the database yet)
     private String name;            // Name of the restaurant that pojo is storing
     private String description;     // Description of the restaurant
-    private HashMap<String, Float> menu;
+    private HashMap<String, Double> menu;
     
     public RestaurantPojo(String name) {
         this(-1, name);
@@ -20,11 +20,11 @@ public class RestaurantPojo {
         this(id, restaurant.name);
     }
 
-    public RestaurantPojo(RestaurantPojo restaurant, HashMap<String, Float> menu) {
+    public RestaurantPojo(RestaurantPojo restaurant, HashMap<String, Double> menu) {
         this(restaurant.id, restaurant.name, restaurant.description, menu);
     }
 
-    public RestaurantPojo(int id, String name, String description, HashMap<String, Float> menu) {
+    public RestaurantPojo(int id, String name, String description, HashMap<String, Double> menu) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -50,11 +50,11 @@ public class RestaurantPojo {
         this.description = description;
     }
 
-    public void insertMenuItem(String item, Float price) {
+    public void insertMenuItem(String item, Double price) {
         this.menu.put(item, price);
     }
 
-    public HashMap<String, Float> getMenu() {
+    public HashMap<String, Double> getMenu() {
         return menu;
     }
     

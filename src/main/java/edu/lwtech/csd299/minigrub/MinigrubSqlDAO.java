@@ -13,7 +13,7 @@ public class MinigrubSqlDAO {
     public MinigrubSqlDAO() {
         this.conn = null;                                   // conn must be created during init()
     }
-
+/*
     public boolean init() {
         logger.info("Connecting to the database...");
 
@@ -170,4 +170,5 @@ public class MinigrubSqlDAO {
         String description = row.getItem("description");
         return restaurants;
     }
+    */
 }

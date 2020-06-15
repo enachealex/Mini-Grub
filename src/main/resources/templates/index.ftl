@@ -9,16 +9,15 @@
     <header>
         <h1>MiniGrub</h1>
         <p>A simulated food delivery service set up by 4 local restaurants that hate GrubHub.</p>
-        <a href="?cmd=signin=${signin}">Log In</a>
-        <a href="?cmd=signin=${register}">Register</a>
+        <a href="?cmd=signin">Log In</a>
+        <a href="?cmd=register">Register</a>
     </header>
     <body>
-       <!-- <h2>${item.name}</h2> -->
-       <h2>Select the restaurant:</h2>
-       <button id="pizza_menu">Pizzeria</button>
-       <button id="burger_menu">Burger Joint</button>
-       <button id="taco_menu">Taco Del Goodness</button>
-       <button id="rice_menu">Rice is Nice</button>
+       <h2>Select a restaurant:</h2>
+       <a href="?cmd=menu"><button id="pizza_menu">Pizzeria</button></a>
+       <a href="?cmd=menu"><button id="burger_menu">Burger Joint</button></a>
+       <a href="?cmd=menu"><button id="taco_menu">Taco Del Goodness</button></a>
+       <a href="?cmd=menu"><button id="rice_menu">Rice is Nice</button></a>
     </body>
 
     <footer>&copy; 2020 BainBridge Team - Beniamin Ungur, Seth Peterson, Alex Enache</footer>

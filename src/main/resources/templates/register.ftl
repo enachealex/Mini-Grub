@@ -12,9 +12,11 @@
     </header>
     <body>
        <h2>Register:</h2>
-       <input type="email" placeholder="Enter Email" name="email" required>
-       <input type="password" placeholder="Enter Password" name="password" minLength="8" maxLength="16" required>
-       <a id="register">Register</a>
+       <form action="register" method="post"> 
+            <input type="text" name="email">
+            <input type="password" name="password">
+            <input type="submit">
+       </form>
     </body>
 
     <footer>&copy; 2020 BainBridge Team - Beniamin Ungur, Seth Peterson, Alex Enache</footer>

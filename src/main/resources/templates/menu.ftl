@@ -9,8 +9,8 @@
     <header>
         <h1>MiniGrub</h1>
         <p>A simulated food delivery service set up by 4 local restaurants that hate GrubHub.</p>
-        <a href="?cmd=signin=${signin}">Log In</a>
-        <a href="?cmd=signin=${register}">Register</a>
+        <a href="?cmd=signin">Log In</a>
+        <a href="?cmd=signin">Register</a>
     </header>
     <body>
         <fieldset>
@@ -18,7 +18,7 @@
             <form name="menu" action="add" method="post">
                 <#list restaurants["menu"] as menu>
                     <tr>
-                        <td>${restaurants.food}</td>
+                        <td>${RestaurantPojo.food}</td>
                         <td>${restaurants.description}</td>
                     </tr>
                 </#list>

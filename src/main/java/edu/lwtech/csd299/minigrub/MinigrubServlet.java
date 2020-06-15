@@ -41,8 +41,8 @@ public class MinigrubServlet extends HttpServlet {
         }
         logger.info("Successfully Loaded Freemarker");
         
-        restaurantMemoryDao = new RestaurantPojoMemoryDAO();
-        addDemoData();
+        //restaurantMemoryDao = new RestaurantPojoMemoryDAO();
+        //addDemoData();
 
         logger.warn("Initialize complete!");
     }
@@ -53,7 +53,7 @@ public class MinigrubServlet extends HttpServlet {
         long startTime = System.currentTimeMillis();
 
         String command = request.getParameter("cmd");
-        if (command == null) command = "show";
+        if (command == null) command = "index";
 
         String template = "";
         Map<String, Object> model = new HashMap<>();
@@ -61,11 +61,24 @@ public class MinigrubServlet extends HttpServlet {
         //TODO: Add more URL commands to the servlet
         switch (command) {
 
-            case "show":
-                String idParam = request.getParameter("id");
-                int id = (idParam == null) ? 0 : Integer.parseInt(idParam);
-                template = "show.ftl";
-                model.put("restaurants", restaurantMemoryDao.getByID(id));
+            case "index":
+                template = "index.ftl";
+                break;
+
+            case "menu":
+                template = "menu.ftl";
+                break;
+
+            case "register":
+                template = "register.ftl";
+                break;
+            
+            case "checkout":
+                template = "checkout.ftl";
+                break;
+
+            case "signin":
+                template = "signin.ftl";
                 break;
 
             default:
@@ -88,9 +101,22 @@ public class MinigrubServlet extends HttpServlet {
     //TODO: doPost() goes here - if needed.
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        UserPojo user = new UserPojo(-1, username);
+        logger.debug("IN - GET " + request.getRequestURI());
+        long startTime = System.currentTimeMillis();
+
+        String command = request.getParameter("cmd");
+
+        String template = "";
+        Map<String, Object> model = new HashMap<>();
+
+        switch (command) {
+            case "register":
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                UserPojo user = new UserPojo(-1, email, email, email, password);
+                break;
+        }
+        
     }
     
     @Override
@@ -123,11 +149,28 @@ public class MinigrubServlet extends HttpServlet {
     private void addDemoData() {
         logger.debug("Creating sample RestaurantPojos...");
         
-        restaurantMemoryDao.insert(new RestaurantPojo(1000, "PizzaPlace"));
-        restaurantMemoryDao.insert(new RestaurantPojo(1001, "TacosPlace"));
-        restaurantMemoryDao.insert(new RestaurantPojo(1002, "RicePlace"));
+        String pizzaPlaceDesc = "Best local pizza restaurant!";
+        String tacoPlaceDesc = "Best tacos around! Me gusta!";
+        String ricePlaceDesc = "General Tso's anyone?";
+
+        HashMap<String, Double> pizzaMenu = new HashMap<>();
+        pizzaMenu.put("Pepperoni Pizza", 10.99);
+        pizzaMenu.put("Cheese pizza", 8.99);
+
+        HashMap<String, Double> tacoMenu = new HashMap<>();
+        tacoMenu.put("Chalupa", 3.99);
+        tacoMenu.put("Burrito", 5.99);
+
+        HashMap<String, Double> riceMenu = new HashMap<>();
+        riceMenu.put("General Tso's", 9.99);
+        riceMenu.put("White Rice", 1.99);
+
+
+        restaurantMemoryDao.insert(new RestaurantPojo(1000, "PizzaPlace", pizzaPlaceDesc, pizzaMenu));
+        restaurantMemoryDao.insert(new RestaurantPojo(1001, "TacosPlace", tacoPlaceDesc, tacoMenu));
+        restaurantMemoryDao.insert(new RestaurantPojo(1002, "RicePlace", ricePlaceDesc, riceMenu));
         
-        logger.info("...items inserted");
+        logger.info("...menu items inserted");
     }
 
 }
