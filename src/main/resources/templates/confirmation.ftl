@@ -2,7 +2,7 @@
 <!-- Alex Enache -->
 <html>
     <head>
-        <title>Minigrub - Home</title>
+        <title>Minigrub - Confirmation</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -13,11 +13,7 @@
         <a href="?cmd=register">Register</a>
     </header>
     <body>
-       <h2>Select a restaurant:</h2>
-       <a href="?cmd=menu"><button id="pizza_menu">Pizzeria</button></a>
-       <a href="?cmd=menu"><button id="burger_menu">Burger Joint</button></a>
-       <a href="?cmd=menu"><button id="taco_menu">Taco Del Goodness</button></a>
-       <a href="?cmd=menu"><button id="rice_menu">Rice is Nice</button></a>
+        <div>Your order has processed and is on its way!</div>
     </body>
 
     <footer>&copy; 2020 BainBridge Team - Beniamin Ungur, Seth Peterson, Alex Enache</footer>
