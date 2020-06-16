@@ -14,10 +14,12 @@
     </header>
     <body>
         <fieldset>
-            <legend>Add Food</legend>
+            <legend>Select Food</legend>
             <form name="menu" action="add" method="post">
                 <#list restaurantMenu?keys as item> <#-- Possibly make "restaurants" into RestaurantPojo -->
-                        <p>${item}: ${restaurantMenu[item]} Quantity : <input type="number" name="quantity" /></p><br/>
+                        <p>${item}: ${restaurantMenu[item]} <br/> 
+                        Quantity : <input type="number" name="quantity" minLength="0" value="0"required/>
+                        <button type="submit" id="cart">Add to Cart</button></p><br/>
                                                             <#-- Possibly make "restaurants" 
                                                             into RestaurantPojo and putting description 
                                                             for each food in RestaurantPojo as well -->
@@ -27,8 +29,7 @@
                         <td>${restaurants.description}</td>
                     </tr> -->
                 </#list>
-                
-                <a href="?cmd=checkout"><button type="submit">Add to Cart</button></a>
+                <a href="?cmd=checkout" id="checkout"><button>Checkout</button></a>
             </form>
         </fieldset>
         
