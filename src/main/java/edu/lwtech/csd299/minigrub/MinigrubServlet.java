@@ -2,6 +2,7 @@
 package edu.lwtech.csd299.minigrub;
 
 import java.io.*;
+import java.text.NumberFormat;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -43,7 +44,6 @@ public class MinigrubServlet extends HttpServlet {
         
         restaurantMemoryDao = new RestaurantPojoMemoryDAO();
         addDemoData();
-
         
 
         logger.warn("Initialize complete!");
@@ -57,34 +57,46 @@ public class MinigrubServlet extends HttpServlet {
         String command = request.getParameter("cmd");
         if (command == null) command = "index";
 
+        int owner = 0;
+        boolean loggedIn = false;
+        HttpSession session = request.getSession(false);
+        if(session != null) {
+            try {
+                owner = (Integer)session.getAttribute("owner");
+                loggedIn = true;
+            } catch (NumberFormatException e) {
+                owner = 0;
+                loggedIn = false;
+            }
+        }
+
+        HashMap<String, Integer> rNameID = new HashMap<>();
+        for (RestaurantPojo rp : restaurantMemoryDao.getAll()) {
+            rNameID.put(rp.getName(), rp.getID());
+        }
+
         String template = "";
-
-        //String pizzaPlaceDesc = "Best local pizza restaurant!";
-        //HashMap<String, Double> pizzaMenu = new HashMap<>();
-        //pizzaMenu.put("Pepperoni Pizza", 10.99);
-        //pizzaMenu.put("Cheese pizza", 8.99);
-
-        //RestaurantPojo restaurant = new RestaurantPojo(1000, "PizzaPlace", pizzaPlaceDesc, pizzaMenu);
         RestaurantPojo restaurant = null;
         Map<String, Object> model = new HashMap<>();
+        model.put("owner", owner);
+        model.put("loggedIn", loggedIn);
 
-        //TODO: Add more URL commands to the servlet
         switch (command) {
 
             case "index":
                 template = "index.ftl";
-                
+                model.put("restaurants", rNameID);
                 break;
 
             case "menu":
-                //int id = request.getParameter("id");
-                restaurant = restaurantMemoryDao.getByID(1000);
-
-                template = "menu.ftl";
+                restaurant = restaurantMemoryDao.getByID(parseInt(request.getParameter("id")));
 
                 model.put("restaurantMenu", restaurant.getMenu());
                 model.put("restaurantName", restaurant.getName());
                 model.put("restaurantDesc", restaurant.getDescription());
+
+                template = "menu.ftl";
+                
                 break;
 
             case "register":
@@ -127,6 +139,8 @@ public class MinigrubServlet extends HttpServlet {
         Map<String, Object> model = new HashMap<>();
 
         switch (command) {
+            case "index":
+                break;
             case "register":
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
@@ -164,12 +178,25 @@ public class MinigrubServlet extends HttpServlet {
         } catch (IOException e) {
             logger.error("IO Error: ", e);
         } 
-    }    
+    }
+    
+    private int parseInt(String s) {
+        int i = -1;
+        if (s != null) {
+            try {
+                i = Integer.parseInt(s);
+            } catch (NumberFormatException e) {
+                i = -2;
+            }
+        }
+        return i;
+    }
 
     private void addDemoData() {
         logger.debug("Creating sample RestaurantPojos...");
         
         String pizzaPlaceDesc = "Best local pizza restaurant!";
+        String burgerPlaceDesc = "Come get your burg on!";
         String tacoPlaceDesc = "Best tacos around! Me gusta!";
         String ricePlaceDesc = "General Tso's anyone?";
 
@@ -177,18 +204,23 @@ public class MinigrubServlet extends HttpServlet {
         pizzaMenu.put("Pepperoni Pizza", 10.99);
         pizzaMenu.put("Cheese pizza", 8.99);
 
+        HashMap<String, Double> burgerMenu = new HashMap<>();
+        burgerMenu.put("Single Cheeseburger", 2.99);
+        burgerMenu.put("Big Mick", 5.99);
+
         HashMap<String, Double> tacoMenu = new HashMap<>();
-        tacoMenu.put("Chalupa", 3.99);
+        tacoMenu.put("Chalupy", 3.99);
         tacoMenu.put("Burrito", 5.99);
 
         HashMap<String, Double> riceMenu = new HashMap<>();
-        riceMenu.put("General Tso's", 9.99);
+        riceMenu.put("General Kim's", 9.99);
         riceMenu.put("White Rice", 1.99);
 
 
-        restaurantMemoryDao.insert(new RestaurantPojo(1000, "PizzaPlace", pizzaPlaceDesc, pizzaMenu));
-        restaurantMemoryDao.insert(new RestaurantPojo(1001, "TacosPlace", tacoPlaceDesc, tacoMenu));
-        restaurantMemoryDao.insert(new RestaurantPojo(1002, "RicePlace", ricePlaceDesc, riceMenu));
+        restaurantMemoryDao.insert(new RestaurantPojo(-1, "Pizzeria", pizzaPlaceDesc, pizzaMenu));
+        restaurantMemoryDao.insert(new RestaurantPojo(-1, "Burger Joint", burgerPlaceDesc, burgerMenu));
+        restaurantMemoryDao.insert(new RestaurantPojo(-1, "Taco Del Goodness", tacoPlaceDesc, tacoMenu));
+        restaurantMemoryDao.insert(new RestaurantPojo(-1, "Rice Is Nice", ricePlaceDesc, riceMenu));
         
         logger.info("...menu items inserted");
     }

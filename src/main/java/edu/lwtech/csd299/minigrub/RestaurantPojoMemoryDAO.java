@@ -31,7 +31,7 @@ public class RestaurantPojoMemoryDAO implements DAO<RestaurantPojo> {
             return -1;
         }
         
-        item = new RestaurantPojo(generateNextItemID(), item.getName());
+        item = new RestaurantPojo(generateNextItemID(), item.getName(), item.getDescription(), item.getMenu());
         memoryDB.add(item);
         
         logger.debug("Item successfully inserted!");
