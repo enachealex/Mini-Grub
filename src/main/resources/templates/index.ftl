@@ -14,10 +14,10 @@
     </header>
     <body>
        <h2>Select a restaurant:</h2>
-       <a href="?cmd=menu"><button id="pizza_menu">Pizzeria</button></a>
-       <a href="?cmd=menu"><button id="burger_menu">Burger Joint</button></a>
-       <a href="?cmd=menu"><button id="taco_menu">Taco Del Goodness</button></a>
-       <a href="?cmd=menu"><button id="rice_menu">Rice is Nice</button></a>
+       <a href="?cmd=menu"><button id=1000>Pizzeria</button></a>
+       <a href="?cmd=menu"><button id=1003>Burger Joint</button></a>
+       <a href="?cmd=menu"><button id=1001>Taco Del Goodness</button></a>
+       <a href="?cmd=menu"><button id=1002>Rice is Nice</button></a>
     </body>
 
     <footer>&copy; 2020 BainBridge Team - Beniamin Ungur, Seth Peterson, Alex Enache</footer>

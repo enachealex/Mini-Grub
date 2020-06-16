@@ -44,6 +44,8 @@ public class MinigrubServlet extends HttpServlet {
         restaurantMemoryDao = new RestaurantPojoMemoryDAO();
         addDemoData();
 
+        
+
         logger.warn("Initialize complete!");
     }
 
@@ -56,6 +58,13 @@ public class MinigrubServlet extends HttpServlet {
         if (command == null) command = "index";
 
         String template = "";
+
+        //String pizzaPlaceDesc = "Best local pizza restaurant!";
+        //HashMap<String, Double> pizzaMenu = new HashMap<>();
+        //pizzaMenu.put("Pepperoni Pizza", 10.99);
+        //pizzaMenu.put("Cheese pizza", 8.99);
+
+        //RestaurantPojo restaurant = new RestaurantPojo(1000, "PizzaPlace", pizzaPlaceDesc, pizzaMenu);
         RestaurantPojo restaurant = null;
         Map<String, Object> model = new HashMap<>();
 
@@ -68,12 +77,14 @@ public class MinigrubServlet extends HttpServlet {
                 break;
 
             case "menu":
-                int id = Integer.parseInt(request.getParameter("id"));
-                restaurant = restaurantMemoryDao.getByID(id);
+                //int id = request.getParameter("id");
+                restaurant = restaurantMemoryDao.getByID(1000);
 
                 template = "menu.ftl";
 
-                model.put("restaurant", restaurant);
+                model.put("restaurantMenu", restaurant.getMenu());
+                model.put("restaurantName", restaurant.getName());
+                model.put("restaurantDesc", restaurant.getDescription());
                 break;
 
             case "register":
