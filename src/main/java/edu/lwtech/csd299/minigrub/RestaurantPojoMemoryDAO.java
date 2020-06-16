@@ -65,16 +65,6 @@ public class RestaurantPojoMemoryDAO implements DAO<RestaurantPojo> {
         return itemFound;
     }
     
-    public RestaurantPojo getByIndex(int index) {
-        // Note: indexes are zero-based
-        logger.debug("Trying to get item with index: " + index);
-
-        if (index < 0 || index > memoryDB.size())
-            return null;
-
-        return memoryDB.get(index);
-    }
-    
     public List<RestaurantPojo> getAll() {
         logger.debug("Getting all items");
         return new ArrayList<>(memoryDB);

@@ -33,7 +33,7 @@ public class MinigrubServlet extends HttpServlet {
         String templateDir = config.getServletContext().getRealPath(TEMPLATE_DIR);
         logger.info("...real path is: " + templateDir);
         
-        logger.info("Initializing Freemarker. templateDir = " + templateDir);
+        logger.info("Initializing Freemarker.templateDir = " + templateDir);
         try {
             freemarker.setDirectoryForTemplateLoading(new File(templateDir));
         } catch (IOException e) {
@@ -41,8 +41,8 @@ public class MinigrubServlet extends HttpServlet {
         }
         logger.info("Successfully Loaded Freemarker");
         
-        //restaurantMemoryDao = new RestaurantPojoMemoryDAO();
-        //addDemoData();
+        restaurantMemoryDao = new RestaurantPojoMemoryDAO();
+        addDemoData();
 
         logger.warn("Initialize complete!");
     }
@@ -56,6 +56,7 @@ public class MinigrubServlet extends HttpServlet {
         if (command == null) command = "index";
 
         String template = "";
+        RestaurantPojo restaurant = null;
         Map<String, Object> model = new HashMap<>();
 
         //TODO: Add more URL commands to the servlet
@@ -63,10 +64,16 @@ public class MinigrubServlet extends HttpServlet {
 
             case "index":
                 template = "index.ftl";
+                
                 break;
 
             case "menu":
+                int id = Integer.parseInt(request.getParameter("id"));
+                restaurant = restaurantMemoryDao.getByID(id);
+
                 template = "menu.ftl";
+
+                model.put("restaurant", restaurant);
                 break;
 
             case "register":
@@ -98,10 +105,9 @@ public class MinigrubServlet extends HttpServlet {
         logger.info("OUT- GET " + request.getRequestURI() + " " + time + "ms");
     }
 
-    //TODO: doPost() goes here - if needed.
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        logger.debug("IN - GET " + request.getRequestURI());
+        logger.debug("IN - POST " + request.getRequestURI());
         long startTime = System.currentTimeMillis();
 
         String command = request.getParameter("cmd");
@@ -116,7 +122,10 @@ public class MinigrubServlet extends HttpServlet {
                 UserPojo user = new UserPojo(-1, email, email, email, password);
                 break;
         }
-        
+
+        processTemplate(response, template, model);
+        long time = System.currentTimeMillis() - startTime;
+        logger.info("OUT- POST " + request.getRequestURI() + " " + time + "ms");
     }
     
     @Override
