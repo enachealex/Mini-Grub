@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!-- Alex Enache -->
+<!-- Alex Enache // Ben Ungur -->
 <html>
     <head>
-        <title>MiniGrub</title>
+        <title>Minigrub - Menu</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -16,11 +16,19 @@
         <fieldset>
             <legend>Add Food</legend>
             <form name="menu" action="add" method="post">
-                <#list restaurants["menu"] as menu>
+                <#list restaurants["menu"] as menu> <#-- Possibly make "restaurants" into RestaurantPojo -->
                     <tr>
                         <td>${RestaurantPojo.food}</td>
-                        <td>${restaurants.description}</td>
+                        <td>${restaurants.description}</td>   <#-- Possibly make "restaurants" 
+                                                            into RestaurantPojo and putting description 
+                                                            for each food in RestaurantPojo as well -->
                     </tr>
+
+                   <#-- Possible Drink option ///////////////////////
+                   <tr>
+                        <td>${RestaurantPojo.drink}</td>
+                        <td>${restaurants.description}</td>
+                    </tr> -->
                 </#list>
                 Quantity : <input type="number" name="quantity" /><br/>
                 <button type="submit">Add to Cart</button>

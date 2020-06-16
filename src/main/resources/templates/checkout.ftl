@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!-- Alex Enache -->
+<!-- Alex Enache // Ben Ungur -->
 <html>
     <head>
-        <title>Display Item</title>
+        <title>Minigrub - Checkout</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -14,9 +14,15 @@
     </header>
     <body>
         <table border="1">
-            <tr>
-                <td></td>
-            </tr>
+            <form name="cart" action="show" method="post"><#-- possibly a get method? -->
+                <#list restaurants["cart"] as cart>
+                    <tr border="0.5">
+                        <td>${RestaurantPojo.food}</td>
+                        Quantity : <input type="number" name="quantity" /><br/>
+                    </tr>
+                </#list>
+                <button type="submit" id="checkout">Pay Order</button>
+            </form>
         </table>
 
         <a href="?cmd=show&index=${remove}">Remove</a> &nbsp; &nbsp;

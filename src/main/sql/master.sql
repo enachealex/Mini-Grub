@@ -1,12 +1,9 @@
 /* AUTHOR: Seth Peterson
- * BRIEF: THIS IS A SINGLE ACTION DATABASE SETUP FILE, currently working:
- * sqlcmd -i [directory to sqlcmd]
- * mysql -u username -p password < master.sql
- * To reset the database and use this again, just use this:
- *   DROP DATABASE Grubdata
- *   go
- * While inside the console window.
+ * BRIEF: THIS IS A SINGLE ACTION DATABASE SETUP FILE, but I haven't
+ * gotten to a command line in order to test mysql just yet.
+ * At this point my sqlcmd files are not useful anymore and I realized
+ * it was a different RDBMs
  */
 
-:r C:\Users\sethp\Desktop\sql\init\database_init.sql
-:r C:\Users\sethp\Desktop\sql\init\stored_procedures.sql
+source database_init.sql;
+source stored_procedures.sql;

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!-- Alex Enache -->
+<!-- Alex Enache // Ben Ungur -->
 <html>
     <head>
-        <title>Display Item</title>
+        <title>Minigrub - Registration</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -13,8 +13,9 @@
     <body>
        <h2>Register:</h2>
        <form action="register" method="post"> 
-            <input type="text" name="email">
-            <input type="password" name="password">
+            <input type="email" placeholder="Enter email" name="email" required>
+            <input type="text" placeholder="Enter Username" name="user" minLength="5" maxLength="20" required>
+            <input type="password" placeholder="Enter Password" name="password" minLength="8" maxLength="16" required>
             <input type="submit">
        </form>
     </body>
