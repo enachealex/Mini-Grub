@@ -80,6 +80,34 @@ public class RestaurantPojoMemoryDAO implements DAO<RestaurantPojo> {
         return itemIDs;
     }
 
+    public RestaurantPojo search(String keyword) {
+        logger.debug("Trying to get restaurant with name containing: " + keyword);
+
+        keyword = keyword.toLowerCase();
+        List<RestaurantPojo> restaurantFound = new ArrayList<>();
+        for (RestaurantPojo restaurant : memoryDB) {
+            if (restaurant.getName().toLowerCase().contains(keyword)) {
+                restaurantFound.add(restaurant);
+                return restaurant;
+            }
+        }
+        return null;
+    }
+
+    public int size() {
+        return memoryDB.size();
+    }
+
+    public boolean update(RestaurantPojo restaurant) {
+        int id = restaurant.getID();
+        logger.debug("Updating restaurant (" + id + ") with " + restaurant);
+
+        delete(id);
+        memoryDB.add(new RestaurantPojo(id, restaurant));
+        memoryDB.sort(Comparator.comparing(RestaurantPojo::getID));
+        return true;
+    }
+
     public void disconnect() {
         this.memoryDB = null;
     }

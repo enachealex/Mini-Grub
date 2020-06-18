@@ -8,13 +8,10 @@
     </head>
     <header>
         <h1>MiniGrub</h1>
-        <p>A simulated food delivery service set up by 4 local restaurants that hate GrubHub.</p>
-        <a href="?cmd=signin=${signin}">Log In</a>
-        <a href="?cmd=signin=${register}">Register</a>
     </header>
     <body>
         <table border="1">
-            <form name="cart" action="show" method="post"><#-- possibly a get method? -->
+            <form name="cart"><#-- possibly a get method? -->
                 <#list restaurants["cart"] as cart>
                     <tr border="0.5">
                         <td>${RestaurantPojo.food}</td>

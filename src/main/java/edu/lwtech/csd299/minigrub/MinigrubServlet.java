@@ -22,6 +22,7 @@ public class MinigrubServlet extends HttpServlet {
     private static final Configuration freemarker = new Configuration(Configuration.getVersion());
 
     private DAO<RestaurantPojo> restaurantMemoryDao = null;
+    private DAO<UserPojo> userMemoryDao = null;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -43,6 +44,7 @@ public class MinigrubServlet extends HttpServlet {
         logger.info("Successfully Loaded Freemarker");
         
         restaurantMemoryDao = new RestaurantPojoMemoryDAO();
+        userMemoryDao = new UserPojoMemoryDAO();
         addDemoData();
         
 
@@ -134,21 +136,101 @@ public class MinigrubServlet extends HttpServlet {
         long startTime = System.currentTimeMillis();
 
         String command = request.getParameter("cmd");
+        if (command == null) command = "";
 
+        int owner = 0;
+        boolean loggedIn = false;
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            try {
+                owner = Integer.parseInt((String)session.getAttribute("owner"));
+                loggedIn = true;
+            } catch (NumberFormatException e) {
+                owner = 0;
+                loggedIn = false;
+            }
+        }
+
+        String message = "";
         String template = "";
         Map<String, Object> model = new HashMap<>();
+        String email = "";
+        String password = "";
+        Map<String, Integer> cart = new HashMap<>();
+        UserPojo user;
 
         switch (command) {
             case "index":
                 break;
-            case "register":
-                String email = request.getParameter("email");
-                String password = request.getParameter("password");
-                UserPojo user = new UserPojo(-1, email, email, email, password);
+
+            case "signin":
+                email = request.getParameter("email");
+                password = request.getParameter("password");
+
+                user = userMemoryDao.search(email);
+                if (user == null) {
+                    message = "We do not have that email on file. Please try again.<br /><a href='?cmd=login'>Log In</a>";
+                    model.put("loggedIn", loggedIn);
+                    model.put("message", message);
+                    break;
+                }
+
+                if (user.getPassword().equals(password)) {
+                    owner = user.getID();
+                    loggedIn = true;
+
+                    session = request.getSession(true);
+                    session.setAttribute("owner", owner);
+
+                    message = "You have successfully logged in!<br /><a href='?cmd=index'>View Restaurants</a>";
+                } else {
+                    message = "Incorrect password. Please try again.<br /><a href='?cmd=login'>Log In</a>";
+                } 
+
+                model.put("loggedIn", loggedIn);
+                model.put("message", message);
                 break;
+            case "register":
+                email = request.getParameter("email");
+                password = request.getParameter("password");
+
+                user = userMemoryDao.search(email);
+                if (user != null) {
+                    message = "That username is already registered here. Please use a different username. <br /> <a href='?cmd=login'>Log In</a>";
+                    model.put("message", message);
+                    break;
+                }
+
+                user = new UserPojo(email, password);
+                userMemoryDao.insert(user);
+
+                message = "Welcome to Minigrub.com! You are now registered. Please <a href='?cmd=login'> log in</a>.";
+                model.put("message", message);
+                break;
+
+            case "menu":
+                user = userMemoryDao.getByID(owner);
+                user.loadCart(request.getParameter("${restaurantMenu[item]}"), parseInt(request.getParameter("quantity")));
+
+                message = "Successfully added items to cart. <a href='?cmd=checkout'>Go to cart</a>.";
+                model.put("message", message);
+                break;
+
+            default:
+                logger.info("Unknown POST command received: " + command);
+
+                try {
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                } catch (IOException e) {
+                    logger.error("IO Error: ", e);
+                }
+                return;
         }
 
+        model.put("message", message);
+
         processTemplate(response, template, model);
+
         long time = System.currentTimeMillis() - startTime;
         logger.info("OUT- POST " + request.getRequestURI() + " " + time + "ms");
     }

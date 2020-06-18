@@ -15,20 +15,12 @@
     <body>
         <fieldset>
             <legend>Add Food</legend>
-            <form name="menu" action="add" method="post">
-                <#list restaurantMenu?keys as item> <#-- Possibly make "restaurants" into RestaurantPojo -->
-                        <p>${item}: ${restaurantMenu[item]} Quantity : <input type="number" name="quantity" /></p><br/>
-                                                            <#-- Possibly make "restaurants" 
-                                                            into RestaurantPojo and putting description 
-                                                            for each food in RestaurantPojo as well -->
-                   <#-- Possible Drink option ///////////////////////
-                   <tr>
-                        <td>${RestaurantPojo.drink}</td>
-                        <td>${restaurants.description}</td>
-                    </tr> -->
+            <form name="menu" action="?cmd=checkout" method="post">
+                <#list restaurantMenu?keys as item>
+                        <p>${item}: $${restaurantMenu[item]} Quantity : <input type="number" name="quantity" /></p><br/>
                 </#list>
                 
-                <a href="?cmd=checkout"><button type="submit">Add to Cart</button></a>
+                <input type="submit" value="Add to Cart"/>
             </form>
         </fieldset>
         
