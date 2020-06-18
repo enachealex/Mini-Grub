@@ -14,6 +14,7 @@
     </header>
     <body>
         <fieldset>
+<<<<<<< HEAD
             <legend>Add Food</legend>
             <form name="menu" action="?cmd=checkout" method="post">
                 <#list restaurantMenu?keys as item>
@@ -21,6 +22,24 @@
                 </#list>
                 
                 <input type="submit" value="Add to Cart"/>
+=======
+            <legend>Select Food</legend>
+            <form name="menu" action="add" method="post">
+                <#list restaurantMenu?keys as item> <#-- Possibly make "restaurants" into RestaurantPojo -->
+                        <p>${item}: ${restaurantMenu[item]} <br/> 
+                        Quantity : <input type="number" name="quantity" minLength="0" value="0"required/>
+                        <button type="submit" id="cart">Add to Cart</button></p><br/>
+                                                            <#-- Possibly make "restaurants" 
+                                                            into RestaurantPojo and putting description 
+                                                            for each food in RestaurantPojo as well -->
+                   <#-- Possible Drink option ///////////////////////
+                   <tr>
+                        <td>${RestaurantPojo.drink}</td>
+                        <td>${restaurants.description}</td>
+                    </tr> -->
+                </#list>
+                <a href="?cmd=checkout" id="checkout"><button>Checkout</button></a>
+>>>>>>> 4ab60016811378f365a36a9618b9fe6da78bb457
             </form>
         </fieldset>
         

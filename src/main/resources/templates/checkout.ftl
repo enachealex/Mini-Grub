@@ -8,6 +8,7 @@
     </head>
     <header>
         <h1>MiniGrub</h1>
+<<<<<<< HEAD
     </header>
     <body>
         <table border="1">
@@ -16,13 +17,27 @@
                     <tr border="0.5">
                         <td>${RestaurantPojo.food}</td>
                         Quantity : <input type="number" name="quantity" /><br/>
+=======
+        <p>A simulated food delivery service set up by 4 local restaurants that hate GrubHub.</p>
+        <a href="?cmd=signin">Log In</a>
+        <a href="?cmd=register">Register</a>
+    </header>
+    <body>
+        <fieldset>
+            <legend>Checkout</legend>
+            <form name="cart" action="show" method="post">
+                <#list cart?keys as item>
+                    <tr>
+                        <td>${item} : ${cart[item]} <br/>
+                        Quantity : <input type="number" name="quantity" minLength="0" required/><br/> <#-- need JAVA to store quantity from previous page to place in this input, but allow changes to input if desired. Maybe if quantity = 0, remove? -->
+                        </td>
+                        
+>>>>>>> 4ab60016811378f365a36a9618b9fe6da78bb457
                     </tr>
                 </#list>
                 <button type="submit" id="checkout">Pay Order</button>
             </form>
-        </table>
-
-        <a href="?cmd=show&index=${remove}">Remove</a> &nbsp; &nbsp;
+        </fieldset>
         
     </body>
 
